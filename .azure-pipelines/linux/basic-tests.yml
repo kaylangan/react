@@ -1,0 +1,36 @@
+#
+# Azure Pipelines configuration for running tests and other checks on Linux/macOS.
+#
+
+steps:
+  # master branch is needed for Prettier step
+  - script: git fetch origin master:master
+    displayName: 'Fetch master branch'
+
+  - script: node ./scripts/prettier/index.js
+    displayName: 'Prettier'
+
+  - script: node ./scripts/tasks/flow-ci
+    displayName: 'Flow CI'
+
+  - script: |
+      export JEST_JUNIT_OUTPUT=.azure-pipelines/test-results/test-basic-linux.xml
+      yarn test --maxWorkers=2
+    displayName: 'Run tests'
+
+  - script: ./scripts/circleci/check_license.sh
+    displayName: 'Check license'
+
+  - script: ./scripts/circleci/check_modules.sh
+    displayName: 'Check modules'
+
+  - script: ./scripts/circleci/test_print_warnings.sh
+    displayName: 'Test print warnings'
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunTitle: 'Linux: Basic'
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '.azure-pipelines/test-results/test-basic-linux.xml'
+    displayName: 'Publish test results to Azure Pipelines'
+    condition: succeededOrFailed()
