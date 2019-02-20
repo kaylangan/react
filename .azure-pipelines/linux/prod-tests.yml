@@ -1,0 +1,17 @@
+#
+# Azure Pipelines configuration for running prod tests on Linux/macOS.
+#
+
+steps:
+  - script: |
+      export JEST_JUNIT_OUTPUT=.azure-pipelines/test-results/test-prod-linux.xml
+      yarn test-prod --maxWorkers=2
+    displayName: 'Run prod tests'
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunTitle: 'Linux: Prod'
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '.azure-pipelines/test-results/test-prod-linux.xml'
+    displayName: 'Publish test results to Azure Pipelines'
+    condition: succeededOrFailed()

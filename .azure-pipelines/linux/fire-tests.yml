@@ -1,0 +1,30 @@
+#
+# Azure Pipelines configuration for running React Fire tests on Linux/macOS.
+#
+
+steps:
+  - script: |
+      export JEST_JUNIT_OUTPUT=.azure-pipelines/test-results/test-fire-linux.xml
+      yarn test-fire --maxWorkers=2
+    displayName: 'Run Fire tests'
+
+  - script: |
+      export JEST_JUNIT_OUTPUT=.azure-pipelines/test-results/test-fire-prod-linux.xml
+      yarn test-fire-prod --maxWorkers=2
+    displayName: 'Run Fire prod tests'
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunTitle: 'Linux: Fire'
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '.azure-pipelines/test-results/test-fire-linux.xml'
+    displayName: 'Publish test results to Azure Pipelines'
+    condition: succeededOrFailed()
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunTitle: 'Linux: Fire Prod'
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '.azure-pipelines/test-results/test-fire-prod-linux.xml'
+    displayName: 'Publish test results to Azure Pipelines'
+    condition: succeededOrFailed()
