@@ -28,3 +28,10 @@ jobs:
     displayName: 'Run tests'
   - script: yarn prettier
     displayName: 'Run prettier'
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/junit.xml'
+    displayName: 'Publish test results to Azure Pipelines'
+    condition: succeededOrFailed()
+    

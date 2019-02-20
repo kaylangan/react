@@ -20,4 +20,5 @@ module.exports = {
   roots: ['<rootDir>/packages', '<rootDir>/scripts'],
   collectCoverageFrom: ['packages/**/*.js'],
   timers: 'fake',
+  reporters: ['default', 'jest-junit'],
 };

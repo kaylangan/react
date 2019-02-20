@@ -63,6 +63,7 @@
     "jasmine-check": "^1.0.0-rc.0",
     "jest": "^23.1.0",
     "jest-diff": "^23.0.1",
+    "jest-junit": "^6.3.0",
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
@@ -91,7 +92,8 @@
     "node": "8.x || 9.x || 10.x || 11.x"
   },
   "jest": {
-    "testRegex": "/scripts/jest/dont-run-jest-directly\\.js$"
+    "testRegex": "/scripts/jest/dont-run-jest-directly\\.js$",
+    "reporters": ["default", "jest-junit"]    
   },
   "scripts": {
     "build": "node ./scripts/rollup/build.js",
