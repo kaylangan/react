@@ -1,0 +1,30 @@
+#
+# Azure Pipelines configuration for building and testing react on Windows.
+#
+
+trigger:
+- master
+
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - script: git config --global core.autocrlf input
+    displayName: 'Fix line endings in Windows before cloning'
+  - checkout: self
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+      checkLatest: 'true'
+    displayName: 'Install Node.js'
+  - script: yarn --frozen-lockfile
+    displayName: 'Install dependencies and build'
+  - script: yarn lint
+    displayName: 'Run lint'
+  - script: yarn build
+    displayName: 'Build'
+  - script: yarn test
+    displayName: 'Run tests'
+  - script: yarn prettier
+    displayName: 'Run prettier'
