@@ -1,0 +1,11 @@
+#
+# Azure Pipelines step to publish error code artifacts for react on Linux, Windows, and macOS.
+#
+
+steps:
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: './scripts/error-codes/codes.json'
+      artifactName: join( $(Agent.JobName), ' error-codes')
+      publishLocation: 'container'
+    displayName: 'Publish error-codes/codes.json'

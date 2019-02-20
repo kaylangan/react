@@ -1,0 +1,17 @@
+#
+# Azure Pipelines setup configuration for react on Linux, Windows, and macOS.
+#
+
+steps:
+  # master is not fetched by default and is needed to run prettier
+  - script: git fetch origin master:master
+    displayName: 'Checkout master'
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+      checkLatest: 'true'
+    displayName: 'Install Node.js'
+
+  - script: yarn --frozen-lockfile
+    displayName: 'Install packages'

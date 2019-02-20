@@ -22,3 +22,5 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
+junit.xml
+.azure-pipelines/test-results/
