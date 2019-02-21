@@ -22,16 +22,12 @@ jobs:
     displayName: 'Install dependencies and build'
   - script: yarn lint
     displayName: 'Run lint'
-  - script: yarn build
-    displayName: 'Build'
-  - script: yarn test
-    displayName: 'Run tests'
-  - script: yarn prettier
+  - script: |
+      git branch -l
+      git rev-parse HEAD
+      git fetch origin master
+      git rev-parse HEAD
+      git rev-parse master
+      yarn prettier
     displayName: 'Run prettier'
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: 'JUnit'
-      testResultsFiles: '**/junit.xml'
-    displayName: 'Publish test results to Azure Pipelines'
-    condition: succeededOrFailed()
     
