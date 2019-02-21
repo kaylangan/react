@@ -23,11 +23,15 @@ jobs:
   - script: yarn lint
     displayName: 'Run lint'
   - script: |
-      git branch -l
+      git branch
+    displayName: 'List branches'
+  - script: |
       git rev-parse HEAD
       git fetch origin master
       git rev-parse HEAD
       git rev-parse master
+      git branch new_master master
+      git rev-parse new_master
       yarn prettier
     displayName: 'Run prettier'
     
