@@ -27,7 +27,7 @@ jobs:
     displayName: 'List branches'
   - script: |
       git rev-parse HEAD
-      git fetch origin master
+      git checkout -t origin/master
       git rev-parse HEAD
       git rev-parse master
       git branch new_master master
