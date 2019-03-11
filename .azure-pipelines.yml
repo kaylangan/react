@@ -11,9 +11,7 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-    - bash: echo $(Build.SourceBranchName)
-    - bash: echo $CI_PULL_REQUEST
-    - bash: echo $AZURE_PIPELINES_BRANCH
+    - template: .azure-pipelines/common/setup.yml
     - script: ./scripts/circleci/track_stats.sh
       displayName: 'Track stats'
   variables:
