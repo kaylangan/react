@@ -83,4 +83,3 @@ variables:
   CI: true
   CI_PULL_REQUEST: eq( $(Build.Reason), 'PullRequest')
   REPO_SLUG:  $(Build.Repository.Name)
-
