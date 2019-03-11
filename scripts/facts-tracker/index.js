@@ -25,9 +25,6 @@ function exec(command, args) {
 
 const isCI = !!process.env.REPO_SLUG;
 
-console.log('branch:');
-console.log(branch);
-
 console.log('isCI:');
 console.log(isCI);
 
