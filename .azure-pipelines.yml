@@ -69,7 +69,7 @@ jobs:
     vmImage: 'ubuntu-16.04'
   steps:
     - template: .azure-pipelines/common/setup.yml
-    - script: yarn lint
+    - bash: echo $(Build.SourceBranchName)
       displayName: 'Run lint'
 
   variables:
