@@ -30,6 +30,9 @@ if (isCI) {
     process.env.CIRCLE_BRANCH || process.env.AZURE_PIPELINES_BRANCH;
   const isPullRequest = !!process.env.CI_PULL_REQUEST;
 
+  console.error('branch:');
+  console.error(branch);
+
   if (branch !== 'master') {
     console.error('facts-tracker: Branch is not master, exiting...');
     process.exit(0);
