@@ -14,7 +14,8 @@ jobs:
     - bash: echo $(Build.SourceBranchName)
     - bash: echo $CI_PULL_REQUEST
     - bash: echo $AZURE_PIPELINES_BRANCH
-
+    - script: ./scripts/circleci/track_stats.sh
+      displayName: 'Track stats'
   variables:
     AZURE_PIPELINES_BRANCH: $(Build.SourceBranchName)
     CI: true
