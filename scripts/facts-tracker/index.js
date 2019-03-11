@@ -25,13 +25,19 @@ function exec(command, args) {
 
 const isCI = !!process.env.REPO_SLUG;
 
+console.log('branch:');
+console.log(branch);
+
+console.log('isCI:');
+console.log(isCI);
+
 if (isCI) {
   const branch =
     process.env.CIRCLE_BRANCH || process.env.AZURE_PIPELINES_BRANCH;
   const isPullRequest = !!process.env.CI_PULL_REQUEST;
 
-  console.error('branch:');
-  console.error(branch);
+  console.log('branch:');
+  console.log(branch);
 
   if (branch !== 'master') {
     console.error('facts-tracker: Branch is not master, exiting...');
