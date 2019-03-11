@@ -11,9 +11,9 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-    - template: .azure-pipelines/common/setup.yml
     - bash: echo $(Build.SourceBranchName)
-      displayName: 'Run lint'
+    - bash: echo $CI_PULL_REQUEST
+    - bash: echo $AZURE_PIPELINES_BRANCH
 
   variables:
     AZURE_PIPELINES_BRANCH: $(Build.SourceBranchName)
