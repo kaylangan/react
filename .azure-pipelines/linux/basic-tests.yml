@@ -6,8 +6,12 @@ steps:
   - script: node ./scripts/prettier/index
     displayName: 'Prettier'
 
+  - bash: echo $REPO_SLUG
+
   - script: node ./scripts/tasks/flow-ci
     displayName: 'Flow CI'
+
+  - bash: echo $REPO_SLUG
 
   - script: |
       export JEST_JUNIT_OUTPUT=.azure-pipelines/test-results/test-basic-linux.xml
@@ -22,6 +26,23 @@ steps:
 
   - script: ./scripts/circleci/test_print_warnings.sh
     displayName: 'Test print warnings'
+
+  - bash: echo $REPO_SLUG
+
+  - script: ./scripts/circleci/check_license.sh
+    displayName: 'Check license'
+
+  - bash: echo $REPO_SLUG
+
+  - script: ./scripts/circleci/check_modules.sh
+    displayName: 'Check modules'
+
+  - bash: echo $REPO_SLUG
+
+  - script: ./scripts/circleci/test_print_warnings.sh
+    displayName: 'Test print warnings'
+
+  - bash: echo $REPO_SLUG
 
   # TODO: Need to set up connection with GitHub and env vars. for this to work
   - script: ./scripts/circleci/track_stats.sh

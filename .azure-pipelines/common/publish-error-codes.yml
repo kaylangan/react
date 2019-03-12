@@ -6,6 +6,6 @@ steps:
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: './scripts/error-codes/codes.json'
-      artifactName: join( $(Agent.JobName), ' error-codes')
+      artifactName: ${{ parameters.artifactName }}
       publishLocation: 'container'
     displayName: 'Publish error-codes/codes.json'

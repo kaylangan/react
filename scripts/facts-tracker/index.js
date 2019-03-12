@@ -42,6 +42,7 @@ if (isCI) {
     process.env.CIRCLE_BRANCH || process.env.AZURE_PIPELINES_BRANCH;
   const isPullRequest = !!process.env.CI_PULL_REQUEST;
 
+  console.log('branch:');
   console.log(branch);
   
   if (branch !== 'master') {

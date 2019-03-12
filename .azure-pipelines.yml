@@ -14,8 +14,11 @@ jobs:
     - template: .azure-pipelines/common/setup.yml
     - script: ./scripts/circleci/track_stats.sh
       displayName: 'Track stats'
+
+
   variables:
     AZURE_PIPELINES_BRANCH: $(Build.SourceBranchName)
     CI: true
-    CI_PULL_REQUEST: eq( variables['Build.Reason'], 'PullRequest')
-    REPO_SLUG:  $(Build.Repository.Name)
+    CI_PULL_REQUEST: eq( $(Build.Reason), 'PullRequest')
+    REPO_SLUG: $(BUILD_REPOSITORYNAME)
+
