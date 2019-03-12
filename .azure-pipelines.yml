@@ -14,7 +14,14 @@ jobs:
     - template: .azure-pipelines/common/setup.yml
     - script: ./scripts/circleci/track_stats.sh
       displayName: 'Track stats'
-
+- job: Job2
+  displayName: 'Job2'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - template: .azure-pipelines/common/setup.yml
+    - template: .azure-pipelines/linux/basic-tests.yml
+      displayName: 'Track stats'
 
   variables:
     AZURE_PIPELINES_BRANCH: $(Build.SourceBranchName)
