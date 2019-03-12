@@ -25,6 +25,18 @@ function exec(command, args) {
 
 const isCI = !!process.env.REPO_SLUG;
 
+console.log('process.env.REPO_SLUG:');
+console.log(process.env.REPO_SLUG);
+
+console.log('process.env.CI_PULL_REQUEST:');
+console.log(process.env.CI_PULL_REQUEST);
+
+console.log('process.env.CI:');
+console.log(process.env.CI);
+
+console.log('isCI:');
+console.log(isCI);
+
 if (isCI) {
   const branch =
     process.env.CIRCLE_BRANCH || process.env.AZURE_PIPELINES_BRANCH;
