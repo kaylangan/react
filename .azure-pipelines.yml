@@ -1,0 +1,29 @@
+#
+# Azure Pipelines configuration for building and testing react on Linux, Windows, and macOS.
+#
+
+trigger:
+- master
+
+jobs:
+- job: Linux
+  displayName: 'Linux'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - bash: echo $(REPO_SLUG)
+    - bash: echo $(CI_PULL_REQUEST)
+
+- job: Windows
+  displayName: 'Windows'
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+    - bash: echo $(REPO_SLUG)
+    - bash: echo $(CI_PULL_REQUEST)
+
+variables:
+  AZURE_PIPELINES_BRANCH: $(Build.SourceBranchName)
+  CI: true
+  CI_PULL_REQUEST: $[ eq( variables['Build.Reason'], 'PullRequest') ]
+  REPO_SLUG:  $(Build.Repository.Name)

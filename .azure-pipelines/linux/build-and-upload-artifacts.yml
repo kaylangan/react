@@ -1,0 +1,55 @@
+#
+# Azure Pipelines configuration for building and uploading artifacts on Linux/macOS.
+#
+
+steps:
+  - script: ./scripts/circleci/add_build_info_json.sh
+    displayName: 'Add build info json'
+
+  - script: ./scripts/circleci/update_package_versions.sh
+    displayName: 'Update package versions'
+
+  - script: ./scripts/circleci/build.sh
+    displayName: 'Build'
+
+  - script: |
+      export JEST_JUNIT_OUTPUT=.azure-pipelines/test-results/test-build-linux.xml
+      yarn test-build --maxWorkers=2
+    displayName: 'Run build tests'
+
+  - script: |
+      export JEST_JUNIT_OUTPUT=.azure-pipelines/test-results/test-build-prod-linux.xml
+      yarn test-build-prod --maxWorkers=2
+    displayName: 'Run build prod tests'
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunTitle: 'Linux: Build'
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '.azure-pipelines/test-results/test-build-linux.xml'
+    displayName: 'Publish build test results to Azure Pipelines'
+    condition: succeededOrFailed()
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunTitle: 'Linux: Build Prod'
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '.azure-pipelines/test-results/test-build-prod-linux.xml'
+    displayName: 'Publish build prod test results to Azure Pipelines'
+    condition: succeededOrFailed()
+
+  - script: node ./scripts/tasks/danger
+    displayName: 'Danger'
+
+  - script: ./scripts/circleci/upload_build.sh
+    displayName: 'Upload build'
+
+  - script: ./scripts/circleci/pack_and_store_artifact.sh
+    displayName: 'Pack artifacts'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: './node_modules.tgz'
+      artifactName: 'node_modules'
+      publishLocation: 'container'
+    displayName: 'Publish node_modules.tgz'

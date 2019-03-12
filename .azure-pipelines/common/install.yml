@@ -1,0 +1,18 @@
+#
+# Azure Pipelines setup configuration for react on Linux, Windows, and macOS.
+#
+
+steps:
+  - script: |
+      git config core.autocrlf input
+      git reset HEAD --hard
+    displayName: 'Preserve LF endings on checkout'
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+      checkLatest: 'true'
+    displayName: 'Install Node.js'
+
+  - script: yarn --frozen-lockfile
+    displayName: 'Install packages'
