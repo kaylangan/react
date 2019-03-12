@@ -25,5 +25,5 @@ jobs:
 variables:
   AZURE_PIPELINES_BRANCH: $(Build.SourceBranchName)
   CI: true
-  CI_PULL_REQUEST: eq( $(Build.Reason), 'PullRequest')
+  CI_PULL_REQUEST: eq( variables['Build.Reason'], 'PullRequest')
   REPO_SLUG:  $(Build.Repository.Name)
