@@ -21,7 +21,6 @@ jobs:
   steps:
     - template: .azure-pipelines/common/setup.yml
     - template: .azure-pipelines/linux/basic-tests.yml
-      displayName: 'Track stats'
 
   variables:
     AZURE_PIPELINES_BRANCH: $(Build.SourceBranchName)
