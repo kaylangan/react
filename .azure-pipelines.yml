@@ -6,84 +6,25 @@ trigger:
 - master
 
 jobs:
-- job: LinuxBasic
-  displayName: 'Linux: Basic Tests'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-    - template: .azure-pipelines/common/setup.yml
-    - template: .azure-pipelines/linux/basic-tests.yml
-    - template: .azure-pipelines/common/publish-error-codes.yml
-      parameters:
-        artifactName: 'error-codes-linux-basic'
-
-- job: LinuxProd
-  displayName: 'Linux: Prod Tests'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-    - template: .azure-pipelines/common/setup.yml
-    - template: .azure-pipelines/linux/prod-tests.yml
-    - template: .azure-pipelines/common/publish-error-codes.yml
-      parameters:
-        artifactName: 'error-codes-linux-prod'
-
-- job: LinuxFire
-  displayName: 'Linux: React Fire Tests'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-    - template: .azure-pipelines/common/setup.yml
-    - template: .azure-pipelines/linux/fire-tests.yml
-    - template: .azure-pipelines/common/publish-error-codes.yml
-      parameters:
-        artifactName: 'error-codes-linux-fire'    
-
-- job: LinuxArtifacts
-  displayName: 'Linux: Build and Upload Artifacts'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-    - template: .azure-pipelines/common/setup.yml
-    - template: .azure-pipelines/linux/build-and-upload-artifacts.yml
-    - template: .azure-pipelines/common/publish-error-codes.yml
-      parameters:
-        artifactName: 'error-codes-linux-artifacts'        
-
-- job: LinuxCoverage
-  displayName: 'Linux: Test Coverage'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-    - template: .azure-pipelines/common/setup.yml
-    - template: .azure-pipelines/linux/test-coverage.yml
-
-- job: WindowsTests
-  displayName: 'Windows: Basic Tests'
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-    - template: .azure-pipelines/common/setup.yml
-    - script: |
-        git config core.autocrlf input
-        git reset HEAD --hard
-      displayName: 'Fix line endings in Windows'
-    - template: .azure-pipelines/windows/basic-tests.yml
-    - template: .azure-pipelines/common/publish-error-codes.yml
-      parameters:
-        artifactName: 'error-codes-windows-basic'            
-
 - job: Lint
   displayName: 'Lint'
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
     - template: .azure-pipelines/common/setup.yml
-    - script: yarn lint
-      displayName: 'Run lint'
+    - script: ./scripts/circleci/track_stats.sh
+      displayName: 'Track stats'
+- job: Job2
+  displayName: 'Job2'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - template: .azure-pipelines/common/setup.yml
+    - template: .azure-pipelines/linux/basic-tests.yml
 
   variables:
     AZURE_PIPELINES_BRANCH: $(Build.SourceBranchName)
     CI: true
     CI_PULL_REQUEST: eq( $(Build.Reason), 'PullRequest')
     REPO_SLUG: $(BUILD_REPOSITORYNAME)
+

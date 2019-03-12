@@ -44,7 +44,7 @@ if (isCI) {
 
   console.log('branch:');
   console.log(branch);
-
+  
   if (branch !== 'master') {
     console.error('facts-tracker: Branch is not master, exiting...');
     process.exit(0);

@@ -18,6 +18,15 @@ steps:
       yarn test --maxWorkers=2
     displayName: 'Run tests'
 
+  - script: ./scripts/circleci/check_license.sh
+    displayName: 'Check license'
+
+  - script: ./scripts/circleci/check_modules.sh
+    displayName: 'Check modules'
+
+  - script: ./scripts/circleci/test_print_warnings.sh
+    displayName: 'Test print warnings'
+
   - bash: echo $REPO_SLUG
 
   - script: ./scripts/circleci/check_license.sh
