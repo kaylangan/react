@@ -1,0 +1,25 @@
+#
+# Azure Pipelines configuration for building and testing react on Windows.
+#
+
+steps:
+  - script: yarn build
+    displayName: 'Build'
+
+  - script: set JEST_JUNIT_OUTPUT=.azure-pipelines/test-results/test-basic-windows.xml&&yarn test
+    displayName: 'Run tests'
+
+  # master branch is needed for Prettier step
+  - script: git fetch origin master:master
+    displayName: 'Fetch master branch'
+
+  - script: yarn prettier
+    displayName: 'Prettier'
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunTitle: 'Windows: Basic'
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '.azure-pipelines/test-results/test-basic-windows.xml'
+    displayName: 'Publish test results to Azure Pipelines'
+    condition: succeededOrFailed()

@@ -1,0 +1,7 @@
+#
+# Azure Pipelines configuration for running test coverage on Linux/macOS.
+#
+
+steps:
+  - script: ./scripts/circleci/test_coverage.sh
+    displayName: 'Test coverage'
